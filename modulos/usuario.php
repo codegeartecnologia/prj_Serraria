@@ -48,7 +48,7 @@
 					endif;
 				endif;				
 			endif;
-			include ('cadastros/cadastrar.php');
+			include ('cadastrar.php');
 		break;
 		case 'listar':
 			echo "<h2> Usuários Cadastrados </h2>";

@@ -126,6 +126,10 @@ a:hover{
 	cursor: pointer;
 }
 
+#ex0{
+    border: #663300 solid 1px;
+}
+
 .info5{
 	height: 80px;	
 	background: #333333;
@@ -156,6 +160,7 @@ a:hover{
 	height: 50px;
 	padding: 2%;
 }
+
 #header{
 	height: 100px;
 	border-bottom: 2px solid #999;
@@ -177,7 +182,7 @@ a:hover{
 #content{
 	float: right;
 	width: 85%;
-	padding-left: 2px;
+	padding: 25px 0 0 5px;
 }
 
 #content h2{

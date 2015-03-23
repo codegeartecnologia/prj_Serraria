@@ -13,6 +13,4 @@
 		endif;
 	?>
 </div><!-- content -->
-
-<?php include('../Funcionarios/sidebar_cad.php'); ?>
 <?php //include('../footer.php'); ?>

@@ -1,14 +1,15 @@
 <div id="dropdown">
 	<ul>
-		<li class='ativo'><img class="profile" src="../images/icones/profile.ico" />
+		<li class='ativo'>
+				<a class="profile_visit" href="#"> <img class="profile" src="../images/icones/profile.ico" /> </a>			
 			<ul>
 				<li id="detalhes">
 					
-					<a href='#'> <img src="../images/icones/add.png" /> Cadastrar </a>
+					<a href='?m=usuario&t=incluir'> <img src="../images/icones/add.png" /> Cadastrar </a>
 			 	</li>
 			 	<li id="detalhes">
 			 		
-			 		<a href='#'> <img src="../images/icones/exibir.ico" /> Exbir </a>
+			 		<a href='?m=usuario&t=listar'> <img src="../images/icones/exibir.ico" /> Exbir </a>
 			 	</li>
 			 	<li id="detalhes">
 			 		

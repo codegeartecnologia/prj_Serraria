@@ -16,30 +16,43 @@
 
 		<title> Painel Administrativo </title>
 		
-	<!--	<script type="text/javascript" src="https://www.google.com/jsapi"></script> -->
+		<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
+    
 	    <script type="text/javascript">
-	      google.load("visualization", "1", {packages:["corechart"]});
-	      google.setOnLoadCallback(drawChart);
-	      function drawChart() {
-	        var data = google.visualization.arrayToDataTable([
-	          ['Madeiras', 'Estoque'],
-	          ['Aproveitamento',     500],
-	          ['Bruta',      200],
-	          ['Seca',  250],
-	          ['Seca e Aparelhada', 290],
-	          ['Tratada Aparelhada',    700],
-	          ['Tratada Bruta',    600],
-	          ['Verde Aparelhada',    800]
-	        ]);
-	
-	        var options = {
-	          title: 'Madeiras em Estoque',
-	          pieHole: 0.4,
-	        };
-	
-	        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-	        chart.draw(data, options);
-	      }
+	    	google.load('visualization', '1', {packages: ['corechart']});
+		    google.setOnLoadCallback(drawChart);
+		
+		    function drawChart() {
+		
+		      var data = google.visualization.arrayToDataTable([
+		        ['Madeiras', 'Estoque', { role: 'style' }],
+		        ['Aparelhada', 817500, '#663300'],
+		        ['Bruta', 817500, '#663300'],
+		        ['Seca', 3792000, '#663300'],
+		        ['Seca Aparelhada', 2695000, '#663300'],
+		        ['Tratada Aparelhada', 2099000, '#663300'],
+		        ['Tratada Bruta', 1526000, '#663300'],
+		        ['Verde Aparelhada', 1526000, '#663300']
+		      ]);
+		
+		      var options = {
+		        title: 'Madeiras em Estoque',
+		        width: 900,
+		        height: 500,
+		        hAxis: {
+		          title: 'QTD em M³',
+		          minValue: 0
+		        },
+		        vAxis: {
+		          title: 'Madeiras'
+		        }
+		      };
+		
+		      var chart = new google.visualization.BarChart(
+		        document.getElementById('ex0'));
+		
+		      chart.draw(data, options);
+		    }
 	    </script>
 
 	</head>
