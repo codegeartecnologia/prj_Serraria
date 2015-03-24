@@ -8,7 +8,6 @@
 	define("BASEURLEXIB", "http://localhost/Github/prj_Serraria/Exibir/index.php");
 	define("BASEURLEST", "http://localhost/Github/prj_Serraria/Estoque/index.php");
 	define("BASEURLFRETE", "http://localhost/Github/prj_Serraria/Frete/index.php");
-	define("BASEURLUSER", "http://localhost/Github/prj_Serraria/Usuario/index.php");
 	//define("ADMURL", BASEURL."painel.php");
 	define("CLASSESPATH", "classes/");
 	define("MODULOPATH", "modulos/");

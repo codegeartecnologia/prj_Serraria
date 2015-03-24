@@ -20,21 +20,18 @@
         
         public function __destruct(){
         	if ($this->conexao != NULL):
-				mysqli_close($this->conexao);
+				mysql_close($this->conexao);
 			endif;			
         }//fim da destruct
         
 		public function conecta(){
-			$this->conexao = new mysqli($this->servidor, $this->usuario, $this->senha) or
-			die($this->trataerro(__FILE__, __FUNCTION__, mysqli_connect_errno(), mysqli_connect_error(), TRUE));
-			
-			mysqli_select_db($this->conexao, $this->nomebanco) or 
-			die($this->trataerro(__FILE__, __FUNCTION__, mysqli_connect_errno(), mysqli_connect_error(), TRUE));
-			
-			mysqli_query($this->conexao, "SET NAMES 'utf8'");
-			mysqli_query($this->conexao, "SET caracter_set_conection=utf8");
-			mysqli_query($this->conexao, "SET caracter_set_client=utf8");
-			mysqli_query($this->conexao, "SET caracter_set_results=utf8");
+			$this->conexao = mysql_connect($this->servidor, $this->usuario, $this->senha, TRUE) 
+			or die($this->trataerro(__FILE__, __FUNCTION__, mysql_errno(), mysql_error(), TRUE));
+			mysql_select_db($this->nomebanco) or die($this->trataerro(__FILE__, __FUNCTION__, mysql_errno(), mysql_error(), TRUE));
+			mysql_query("SET NAMES 'utf8'");
+			mysql_query("SET caracter_set_conection=utf8");
+			mysql_query("SET caracter_set_client=utf8");
+			mysql_query("SET caracter_set_results=utf8");
 		}//fim da conecta
 		
 		public function inserir($objeto){
@@ -128,8 +125,8 @@
 		
 		public function executaSQL($sql=NULL){
 			if($sql != NULL):
-				$query = mysqli_query($this->conexao, $sql) or $this->trataerro(__FILE__, __FUNCTION__); 
-				$this->linhasafetadas = mysqli_affected_rows($this->conexao);
+				$query = mysql_query($sql) or $this->trataerro(__FILE__, __FUNCTION__); 
+				$this->linhasafetadas = mysql_affected_rows($this->conexao);
 				if(substr(trim(strtolower($sql)), 0,6)=="select"):
 					$this->dataset = $query;
 					return $query;
@@ -144,16 +141,16 @@
 		public function retornaDados($tipo=NULL){
 			switch (strtolower($tipo)):
 				case 'array':
-					return mysqli_fetch_array($this->dataset);
+					return mysql_fetch_array($this->dataset);
 				break;
 				case 'assoc':
-					return mysqli_fetch_assoc($this->dataset);
+					return mysql_fetch_assoc($this->dataset);
 				break;
 				case 'object':
-					return mysqli_fetch_object($this->dataset);
+					return mysql_fetch_object($this->dataset);
 				break;
 				default: 
-					return mysqli_fetch_object($this->dataset);					
+					return mysql_fetch_object($this->dataset);					
 				break;
 			endswitch;
 		}//fim da funcao retornaDados
@@ -161,8 +158,8 @@
 		public function trataerro($arquivo=NULL, $rotina=NULL, $numero=NULL, $msgerro=NULL, $geraexcepct=FALSE){
 			if($arquivo == NULL) $arquivo = "nao informado";
 			if($rotina == NULL) $rotina = "nao informado";
-			if($numero == NULL) $rotina = mysqli_connect_errno($this->conexao);
-			if($msgerro == NULL) $arquivo = mysqli_connect_error($this->conexao);
+			if($numero == NULL) $rotina = mysql_errno($this->conexao);
+			if($msgerro == NULL) $arquivo = mysql_error($this->conexao);
 			$resultado = 'Ocorreu um erro com os seguintes detalhes: <br />
 				<strong> Arquivo: </strong> '.$arquivo.'<br />
 				<strong> Rotina: </strong> '.$rotina.'<br />

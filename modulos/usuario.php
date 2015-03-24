@@ -54,7 +54,7 @@
 			echo "<h2> Usuários Cadastrados </h2>";
 			loadCSS('data_tables', NULL, TRUE);
 			loadJS('jquery_data_tables');
-			include ('../Usuario/listar.php');
+			include ('formularios/listar.php');
 		break;
 		case 'editar':
 			echo '<h2> Edição de usuários </h2>';
@@ -105,7 +105,7 @@
 					//avisa para seleciona user
 					printMSG('Usuário não definido, <a href="?m=usuario&t=listar"> Escolha um usuário para alterar!</a>','alerta');
 				endif;
-				include ('../Usuario/editar.php');
+				include ('formularios/editar.php');
 			else:
 				printMSG('Você não tem permissão para acessar esta página! <a href="'.ADMURL.'?m=usuario&t=listar"> Voltar </a>','erro');
 			endif;
@@ -138,7 +138,7 @@
 					//avisa para seleciona user
 					printMSG('Usuário não definido, <a href="?m=usuario&t=listar"> Escolha um usuário para alterar!</a>','alerta');
 				endif;
-				include ('../Usuario/mudarsenha.php');
+				include ('formularios/mudarsenha.php');
 			else:
 				//Sem permissão para alterar
 				printMSG('Você não tem permissão para acessar esta página! <a href="'.ADMURL.'?m=usuario&t=listar"> Voltar </a>','erro');
@@ -175,7 +175,7 @@
 					//avisa para seleciona user
 					printMSG('Usuário não definido, <a href="?m=usuario&t=listar"> Escolha um usuário para excluir!</a>','alerta');
 				endif;
-				include ('../Usuario/excluir.php');
+				include ('formularios/excluir.php');
 			else:
 				printMSG('Você não tem permissão para acessar esta página! <a href="'.ADMURL.'?m=usuario&t=listar"> Voltar </a>','erro');
 			endif;

@@ -26,6 +26,12 @@ a:hover{
 	border-radius: 5px;
 }
 
+#dropdown > ul > li > a{color: #999999;}
+#dropdown ul ul a {color: #999999;}
+
+/*Alterado aqui #2580a2 para red*/
+#dropdown li > a:hover, #cssmenu ul li:hover > a { text-decoration: none; }
+
 #dropdown li ul {
 	display: none;
 	border: #999999 solid 1px;
@@ -51,23 +57,16 @@ a:hover{
     margin: 10px;
 }
 
+/*Alterado aqui #2580a2 para red*/
+#dropdown li ul a:hover, #cssmenu li ul li:hover > a {
+  color: #333333;
+  text-decoration: none;
+}
+
 .profile{
 	width: 25px;
 	height: 25px;
 	margin-left: 10px;	
-}
-.buttom_user{
-	border: hidden;
-	background: none;
-	text-align: left;
-	float: left;
-	line-height: 35px;
-	color: #999999;
-}
-
-.buttom_user:hover{
-	color: #333333;
-	cursor: pointer;
 }
 
 #detalhes img{

@@ -1,5 +1,5 @@
 <?php 
-	require_once("../funcoes.php");
+	require_once("funcoes.php");
 	protegeArquivo(basename(__FILE__));
 ?>
 
@@ -21,10 +21,10 @@
 						printf('<td class="center"> %s / %s </td>', strtoupper($res->ativo), strtoupper($res->administrador));
 						printf('<td class="center"> %s </td>', date("d/m/y", strtotime($res->datacad)));
 						printf('<td id="acoes" class="center"> 
-									<a href="?m=usuario&t=incluir" title="Novo Cadastro"> 	<img src="../images/icones/add.ico" alt="Novo Cadastro"/> </a>
-									<a href="?m=usuario&t=editar&id=%s" title="Editar"> 	<img src="../images/icones/edit.ico" alt="Editar"/> 		</a>
-									<a href="?m=usuario&t=senha&id=%s" title="Mudar Senha"> <img src="../images/icones/pwd.ico" alt="Mudar Senha"/> 	</a>
-									<a href="?m=usuario&t=excluir&id=%s" title="Excluir"> 	<img src="../images/icones/del.ico" alt="Excluir"/> 		</a>
+									<a href="?m=usuario&t=incluir" title="Novo Cadastro"> 	<img src="images/icones/add.ico" alt="Novo Cadastro"/> </a>
+									<a href="?m=usuario&t=editar&id=%s" title="Editar"> 	<img src="images/icones/edit.ico" alt="Editar"/> 		</a>
+									<a href="?m=usuario&t=senha&id=%s" title="Mudar Senha"> <img src="images/icones/pwd.ico" alt="Mudar Senha"/> 	</a>
+									<a href="?m=usuario&t=excluir&id=%s" title="Excluir"> 	<img src="images/icones/del.ico" alt="Excluir"/> 		</a>
 								</td>', $res->id, $res->id, $res->id);
 						
 					echo '</tr>';
