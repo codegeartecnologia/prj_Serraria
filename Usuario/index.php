@@ -13,4 +13,15 @@
 		endif;
 	?>
 </div><!-- content -->
+<div id="sidebar">
+	<ul id="accordion">
+		<li><a href="?m=usuario&t=incluir"> Cadastrar </a></li>
+		<li><a href="?m=usuario&t=listar"> Exibir </a></li>
+		<?php
+			$sessao = new sessao();
+			$meuid = $sessao->getVar('iduser');
+		?>
+		<li><a href="?m=usuario&t=senha&id=<?php echo $meuid; ?>"> Mudar senha </a></li>
+	</ul><!-- accordion -->
+</div><!-- sidebar -->
 <?php //include('../footer.php'); ?>

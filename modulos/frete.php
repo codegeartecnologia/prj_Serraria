@@ -5,50 +5,59 @@
 	loadJS('jquery_validate_msg_ptbr');
 	
 	switch ($tela): 
-		case 'login':
-			$sessao = new sessao();
-			if($sessao->getNvars() > 0 && $sessao->getVar('logado') == TRUE && $sessao->getVar('ip') == $_SERVER['REMOTE_ADDR']):
-				redireciona('Informacoes/index.php');
-			endif;			
-			if(isset($_POST['logar'])):
-				$user = new usuario();
-				$user->setValor('login', antiInject($_POST['usuario']));
-				$user->setValor('senha', antiInject($_POST['senha']));
-				if($user->doLogin($user)):
-					redireciona('Informacoes/index.php');
-				else:
-					redireciona('?erro=2');
-				endif;				
-			endif;			
-			include ('login.php');
-		break;
-		case 'incluir':
-			echo "<h2> Cadastro de usuários </h2>";
+		case 'motorista_incluir':
+			echo "<h2> Cadastro de Motorista </h2>";
 			if(isset($_POST['cadastrar'])):
 				$user = new usuario(array(
 					'nome'=>$_POST['nome'],
-					'email'=>$_POST['email'],
-					'login'=>$_POST['login'],
-					'senha'=>codificaSenha($_POST['senha']),
-					'administrador'=>($_POST['adm']=='on') ? 's' : 'n'
+					'rg'=>$_POST['rg'],
+					'cpf'=>$_POST['cpf'],
+					'idade'=>$_POST['idade'],
+					'cnh'=>$_POST['cnh'],
 				));
-				if($user->existeRegistro('login',$_POST['login'])):
-					printMSG(' Este login já está cadastrado, escolha outro nome de usuário!', 'erro') ;
+				if($user->existeRegistro('rg',$_POST['rg'])):
+					printMSG(' Este RG já está cadastrado, cadastre outro!', 'erro') ;
 					$duplicado = TRUE;
 				endif;
-				if($user->existeRegistro('email',$_POST['email'])):
-					printMSG(' Este email já está cadastrado, escolha outro endereço!', 'erro') ;
+				if($user->existeRegistro('cpf',$_POST['cpf'])):
+					printMSG(' Este CPF já está cadastrado, cadastre outro!', 'erro') ;
 					$duplicado = TRUE;
 				endif;
 				if($duplicado != TRUE):
 					$user->inserir($user);
 					if($user->linhasafetadas == 1):
-						printMSG('Dados inceridos com sucesso! <a href="'.ADMURL.'?m=usuario&t=listar"> Exibir Cadastro </a>') ;
+						printMSG('Dados inceridos com sucesso! <a href="'.ADMURL.'?m=frete&t=listar"> Exibir Cadastro </a>') ;
 						unset($_POST);
 					endif;
 				endif;				
 			endif;
-			include ('cadastrar.php');
+			include ('../Frete/cad_motorista.php');
+		break;
+		case 'caminhao_incluir':
+			echo "<h2> Cadastro de Caminhões </h2>";
+			if(isset($_POST['cadastrar'])):
+				$user = new usuario(array(
+					'placa'=>$_POST['placa'],
+					'cor'=>$_POST['cor'],
+					'chassi'=>$_POST['chassi'],
+				));
+				if($user->existeRegistro('chassi',$_POST['chassi'])):
+					printMSG(' Este N° Chassi já está cadastrado, cadastre outro!', 'erro') ;
+					$duplicado = TRUE;
+				endif;
+				if($user->existeRegistro('placa',$_POST['placa'])):
+					printMSG(' Este Placa já está cadastrado, cadastre outro!', 'erro') ;
+					$duplicado = TRUE;
+				endif;
+				if($duplicado != TRUE):
+					$user->inserir($user);
+					if($user->linhasafetadas == 1):
+						printMSG('Dados inceridos com sucesso! <a href="'.ADMURL.'?m=frete&t=listar"> Exibir Cadastro </a>') ;
+						unset($_POST);
+					endif;
+				endif;				
+			endif;
+			include ('../Frete/cad_caminhao.php');
 		break;
 		case 'listar':
 			echo "<h2> Usuários Cadastrados </h2>";
@@ -90,10 +99,10 @@
 						if($duplicado != TRUE):
 							$user->atualizar($user);
 							if($user->linhasafetadas == 1):
-								printMSG('Dados alterados com sucesso! <a href="'.ADMURL.'?m=usuario&t=listar"> Ver alteração </a>') ;
+								printMSG('Dados alterados com sucesso! <a href="'.ADMURL.'?m=frete&t=listar"> Ver alteração </a>') ;
 								unset($_POST);
 							else:
-								printMSG(' Nenhum dado foi alterado! <a href="'.ADMURL.'?m=usuario&t=listar"> Ver usuários </a>', 'alerta') ;
+								printMSG(' Nenhum dado foi alterado! <a href="'.ADMURL.'?m=frete&t=listar"> Ver usuários </a>', 'alerta') ;
 							endif;
 						endif;				
 					endif;									
@@ -103,11 +112,11 @@
 					$resbd = $userbd->retornaDados();
 				else:
 					//avisa para seleciona user
-					printMSG('Usuário não definido, <a href="?m=usuario&t=listar"> Escolha um usuário para alterar!</a>','alerta');
+					printMSG('Usuário não definido, <a href="?m=frete&t=listar"> Escolha um usuário para alterar!</a>','alerta');
 				endif;
 				include ('../Usuario/editar.php');
 			else:
-				printMSG('Você não tem permissão para acessar esta página! <a href="'.ADMURL.'?m=usuario&t=listar"> Voltar </a>','erro');
+				printMSG('Você não tem permissão para acessar esta página! <a href="'.ADMURL.'?m=frete&t=listar"> Voltar </a>','erro');
 			endif;
 		break;
 		case 'senha':
@@ -124,10 +133,10 @@
 						$user->valorpk = $id;
 						$user->atualizar($user);
 						if($user->linhasafetadas == 1):
-							printMSG('Senha alterada com sucesso! <a href="'.ADMURL.'?m=usuario&t=listar"> Ver alteração </a>') ;
+							printMSG('Senha alterada com sucesso! <a href="'.ADMURL.'?m=frete&t=listar"> Ver alteração </a>') ;
 							unset($_POST);
 						else:
-							printMSG(' Nenhum dado foi alterado! <a href="'.ADMURL.'?m=usuario&t=listar"> Ver usuários </a>', 'alerta') ;
+							printMSG(' Nenhum dado foi alterado! <a href="'.ADMURL.'?m=frete&t=listar"> Ver usuários </a>', 'alerta') ;
 						endif;									
 					endif;									
 					$userbd = new usuario();
@@ -136,12 +145,12 @@
 					$resbd = $userbd->retornaDados();
 				else:
 					//avisa para seleciona user
-					printMSG('Usuário não definido, <a href="?m=usuario&t=listar"> Escolha um usuário para alterar!</a>','alerta');
+					printMSG('Usuário não definido, <a href="?m=frete&t=listar"> Escolha um usuário para alterar!</a>','alerta');
 				endif;
 				include ('../Usuario/mudarsenha.php');
 			else:
 				//Sem permissão para alterar
-				printMSG('Você não tem permissão para acessar esta página! <a href="'.ADMURL.'?m=usuario&t=listar"> Voltar </a>','erro');
+				printMSG('Você não tem permissão para acessar esta página! <a href="'.ADMURL.'?m=frete&t=listar"> Voltar </a>','erro');
 			endif;
 		break;
 		case '':
@@ -159,10 +168,10 @@
 						$user->extras_select = "WHERE id=$id";						
 						$user->deletar($user);
 						if($user->linhasafetadas == 1):
-							printMSG('Dados excluídos com sucesso! <a href="'.ADMURL.'?m=usuario&t=listar"> Ver alteração </a>') ;
+							printMSG('Dados excluídos com sucesso! <a href="'.ADMURL.'?m=frete&t=listar"> Ver alteração </a>') ;
 							unset($_POST);
 						else:
-							printMSG(' Nenhum registro foi excluído! <a href="'.ADMURL.'?m=usuario&t=listar"> Ver usuários </a>', 'alerta') ;
+							printMSG(' Nenhum registro foi excluído! <a href="'.ADMURL.'?m=frete&t=listar"> Ver usuários </a>', 'alerta') ;
 						endif;
 								
 					endif;				
@@ -173,11 +182,11 @@
 					$resbd = $userbd->retornaDados();
 				else:
 					//avisa para seleciona user
-					printMSG('Usuário não definido, <a href="?m=usuario&t=listar"> Escolha um usuário para excluir!</a>','alerta');
+					printMSG('Usuário não definido, <a href="?m=frete&t=listar"> Escolha um usuário para excluir!</a>','alerta');
 				endif;
 				include ('../Usuario/excluir.php');
 			else:
-				printMSG('Você não tem permissão para acessar esta página! <a href="'.ADMURL.'?m=usuario&t=listar"> Voltar </a>','erro');
+				printMSG('Você não tem permissão para acessar esta página! <a href="'.ADMURL.'?m=frete&t=listar"> Voltar </a>','erro');
 			endif;
 		break;
 		default:
