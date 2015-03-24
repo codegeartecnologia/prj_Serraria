@@ -131,45 +131,4 @@
 		endif;
 		return $string;
 	}
-	
-	function verificaExtensao($arquivo){
-		$arq = $arquivo;
-		$ext_aceita = array('.pdf', '.doc', '.docx');
-		$extensao = strtolower(strrchr($arq['name'], '.'));
-		foreach($ext_aceita as $v):
-			if($v == $extensao):
-				return TRUE;
-			endif;
-		endforeach;
-		return FALSE;		
-	}
-	
-	function Enviar($arquivo, $objetivo, $destino, $ext_permitido=''){
-        //cria a variavel do arquivo
-        $file = $arquivo;	 
-        //pega a extencao
-        $extencao = strchr($file['name'],'.');	 
-        //pasta destino;
-        $destino = $destino;                
-        //move o arquivo para a pasta upload//
-        $novo_nome = md5(date("d/m/Y h:s:i")).$extencao; 
-        //move o arquivo para a pasta upload/
-        if (!move_uploaded_file($file['tmp_name'], $destino.$novo_nome)) {
-            printMSG('ERRO: Arquivo não enviado!','erro');
-        }else{
-            
-			$curriculo = new curriculo(array(
-				'objetivo'=>$objetivo,
-				'nome_arquivo'=>$file['name'],
-				'novo_nome'=>$novo_nome,
-				'destino'=>$destino
-			));
-			
-			$curriculo->inserir($curriculo);
-			if($curriculo->linhasafetadas == 1):
-				printMSG('SUCESSO: Arquivo enviado com sucesso!', 'sucesso');
-				unset($_FILES);
-			endif;
-        }
-   }
 ?>

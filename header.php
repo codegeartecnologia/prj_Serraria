@@ -26,26 +26,28 @@
 		
 		      var data = google.visualization.arrayToDataTable([
 		        ['Madeiras', 'Estoque', { role: 'style' }],
-		        ['Aparelhada', 817500, '#663300'],
-		        ['Bruta', 817500, '#663300'],
-		        ['Seca', 3792000, '#663300'],
-		        ['Seca Aparelhada', 2695000, '#663300'],
-		        ['Tratada Aparelhada', 2099000, '#663300'],
-		        ['Tratada Bruta', 1526000, '#663300'],
-		        ['Verde Aparelhada', 1526000, '#663300']
+		        ['Aparelhada', 200, '#663300'],
+		        ['Bruta', 300, '#663300'],
+		        ['Seca', 400, '#663300'],
+		        ['Seca Aparelhada', 500, '#663300'],
+		        ['Tratada Aparelhada', 600, '#663300'],
+		        ['Tratada Bruta', 700, '#663300'],
+		        ['Verde Aparelhada', 800, '#663300']
 		      ]);
 		
 		      var options = {
 		        title: 'Madeiras em Estoque',
 		        width: 900,
 		        height: 500,
+		        label: 'color: #663300',
 		        hAxis: {
-		          title: 'QTD em M³',
+		          title: 'Quantidade em M³',
 		          minValue: 0
 		        },
 		        vAxis: {
 		          title: 'Madeiras'
-		        }
+		        },
+		        isStacked: true
 		      };
 		
 		      var chart = new google.visualization.BarChart(
