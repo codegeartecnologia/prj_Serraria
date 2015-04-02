@@ -127,10 +127,6 @@ a:hover{
 	cursor: pointer;
 }
 
-#ex0{
-    border: #663300 solid 1px;
-}
-
 .info5{
 	height: 80px;	
 	background: #333333;
@@ -149,7 +145,6 @@ a:hover{
 .infor{
 	font-size: 16px;
 	text-align: center;
-	padding-top: 12%;
 }
 
 .detalhes{
@@ -188,8 +183,12 @@ a:hover{
 
 #content h2{
 	font-size: 20px;
-	border-bottom: 1px solid #999;
+	/*border-bottom: 1px solid #999;*/
 	margin-bottom: 10px;	
+}
+
+.dados{
+	margin-top: 30px;
 }
 
 #sidebar{
@@ -219,6 +218,14 @@ a:hover{
 	margin: 4%;
 	margin-left: 6%;
 	
+}
+
+#donutchart{
+	float: right;
+}
+
+#chart_div{
+	float: left;
 }
 
 /*#accordion li:hover ul{ display: block;}*/
@@ -290,6 +297,17 @@ form label{
 	margin-right: 5px;
 }
 
+.admissao_demissao{
+	width: 450px;
+	padding-bottom: 40px;
+}
+.li_left{
+	float: left;
+}
+.li_right{
+	float: right;
+}
+
 form label.error{
 	float: none;
 	display: block;
@@ -355,4 +373,9 @@ form input[type=text]:focus,  form input[type=email]:focus, form input[type=file
 #acoes img{
 	width: 16px;
 	height: 16px;
+}
+
+li img{
+	width: 20px;
+	height: 20px;
 }

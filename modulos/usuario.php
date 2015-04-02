@@ -43,7 +43,7 @@
 				if($duplicado != TRUE):
 					$user->inserir($user);
 					if($user->linhasafetadas == 1):
-						printMSG('Dados inceridos com sucesso! <a href="'.ADMURL.'?m=usuario&t=listar"> Exibir Cadastro </a>') ;
+						printMSG('Dados inceridos com sucesso! <a href="?m=usuario&t=listar"> Exibir Cadastro </a>') ;
 						unset($_POST);
 					endif;
 				endif;				
@@ -90,10 +90,10 @@
 						if($duplicado != TRUE):
 							$user->atualizar($user);
 							if($user->linhasafetadas == 1):
-								printMSG('Dados alterados com sucesso! <a href="'.ADMURL.'?m=usuario&t=listar"> Ver alteração </a>') ;
+								printMSG('Dados alterados com sucesso! <a href="?m=usuario&t=listar"> Ver alteração </a>') ;
 								unset($_POST);
 							else:
-								printMSG(' Nenhum dado foi alterado! <a href="'.ADMURL.'?m=usuario&t=listar"> Ver usuários </a>', 'alerta') ;
+								printMSG(' Nenhum dado foi alterado! <a href="?m=usuario&t=listar"> Ver usuários </a>', 'alerta') ;
 							endif;
 						endif;				
 					endif;									
@@ -107,7 +107,7 @@
 				endif;
 				include ('../Usuario/editar.php');
 			else:
-				printMSG('Você não tem permissão para acessar esta página! <a href="'.ADMURL.'?m=usuario&t=listar"> Voltar </a>','erro');
+				printMSG('Você não tem permissão para acessar esta página! <a href="?m=usuario&t=listar"> Voltar </a>','erro');
 			endif;
 		break;
 		case 'senha':
@@ -124,10 +124,10 @@
 						$user->valorpk = $id;
 						$user->atualizar($user);
 						if($user->linhasafetadas == 1):
-							printMSG('Senha alterada com sucesso! <a href="'.ADMURL.'?m=usuario&t=listar"> Ver alteração </a>') ;
+							printMSG('Senha alterada com sucesso! <a href="?m=usuario&t=listar"> Ver alteração </a>') ;
 							unset($_POST);
 						else:
-							printMSG(' Nenhum dado foi alterado! <a href="'.ADMURL.'?m=usuario&t=listar"> Ver usuários </a>', 'alerta') ;
+							printMSG(' Nenhum dado foi alterado! <a href="?m=usuario&t=listar"> Ver usuários </a>', 'alerta') ;
 						endif;									
 					endif;									
 					$userbd = new usuario();
@@ -141,7 +141,7 @@
 				include ('../Usuario/mudarsenha.php');
 			else:
 				//Sem permissão para alterar
-				printMSG('Você não tem permissão para acessar esta página! <a href="'.ADMURL.'?m=usuario&t=listar"> Voltar </a>','erro');
+				printMSG('Você não tem permissão para acessar esta página! <a href="?m=usuario&t=listar"> Voltar </a>','erro');
 			endif;
 		break;
 		case '':
@@ -159,10 +159,10 @@
 						$user->extras_select = "WHERE id=$id";						
 						$user->deletar($user);
 						if($user->linhasafetadas == 1):
-							printMSG('Dados excluídos com sucesso! <a href="'.ADMURL.'?m=usuario&t=listar"> Ver alteração </a>') ;
+							printMSG('Dados excluídos com sucesso! <a href="?m=usuario&t=listar"> Ver alteração </a>') ;
 							unset($_POST);
 						else:
-							printMSG(' Nenhum registro foi excluído! <a href="'.ADMURL.'?m=usuario&t=listar"> Ver usuários </a>', 'alerta') ;
+							printMSG(' Nenhum registro foi excluído! <a href="?m=usuario&t=listar"> Ver usuários </a>', 'alerta') ;
 						endif;
 								
 					endif;				
@@ -177,7 +177,7 @@
 				endif;
 				include ('../Usuario/excluir.php');
 			else:
-				printMSG('Você não tem permissão para acessar esta página! <a href="'.ADMURL.'?m=usuario&t=listar"> Voltar </a>','erro');
+				printMSG('Você não tem permissão para acessar esta página! <a href="?m=usuario&t=listar"> Voltar </a>','erro');
 			endif;
 		break;
 		default:

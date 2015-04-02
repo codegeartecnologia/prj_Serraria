@@ -4,6 +4,14 @@ $(document).ready(function(){
 	$("fieldset").addClass('radius5');
 	$("sidebar li").addClass('radius5');
 	
+	$('#rg').mask('##.###.###-#');
+	$('#cpf').mask('###.###.###-##');
+	$('#data_nasc').mask('##/##/####');
+	$('#num_carteira').mask('######');
+	$('#pis').mask('###.#####.##-#');
+	$('#matricula').mask('#.###.###');
+	$('#admissao').mask('##/##/####');
+	$('#demissao').mask('##/##/####');	
 	//accordion
 	$('#accordion a.item').click(function() {
 		$('#accordion li').children('ul').slideUp('medium');
@@ -35,8 +43,9 @@ $(document).ready(function(){
 	});
 	
 	//Data_Tables
-	$("#listausers").dataTable({        
+	var table = $("#listausers").dataTable({        
 		"sSrollY": "400px",
+		"scrollX": true,
 		"bPaginate": false,
 		"aaSorting": [[0, "asc"]],
 		language: {
@@ -47,5 +56,15 @@ $(document).ready(function(){
             "sSearch": "Perquisar:"
         }
 	});
+	
+	$('a.toggle-vis').on( 'click', function (e) {
+        e.preventDefault();
+ 
+        // Get the column API object
+        var column = table.column( $(this).attr('data-column') );
+ 
+        // Toggle the visibility
+        column.visible( ! column.visible() );
+    } );
 						
 });

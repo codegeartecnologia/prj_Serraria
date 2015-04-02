@@ -8,29 +8,56 @@
 		case 'incluir':
 			echo "<h2> Cadastro de Funcionários </h2>";
 			if(isset($_POST['cadastrar'])):
-				$user = new usuario(array(
+				$func = new funcionario(array(
 					'nome'=>$_POST['nome'],
-					'idade'=>$_POST['email'],
-					'setor'=>$_POST['login']
+					'rg' => str_replace('.', '', str_replace('-', '', $_POST['rg'])),
+					'cpf' => str_replace('.', '', str_replace('-', '', $_POST['cpf'])),
+					'data_nasc' => date("Y-m-d",$_POST['data_nasc']),
+					'pai' => $_POST['nome_pai'],
+					'mae' => $_POST['nome_mae'],
+					'dependentes' => $_POST['dependentes'],
+					'num_carteira' => $_POST['num_carteira'],
+					'pis' => $_POST['pis'],
+					'admissao' => date("Y-m-d",$_POST['admissao']),
+					'demissao' => date("Y-m-d",$_POST['demissao']),
+					'setor' => $_POST['setor'],
+					'salario' => $_POST['salario']
+					//str_replace('.', '', str_replace('-', '', $_POST['salario']))
 				));
+				if($func->existeRegistro('rg',$_POST['rg'])):
+					printMSG(' Este RG já está cadastrado, cadastre outro!', 'erro') ;
+					$duplicado = TRUE;
+				endif;
+				if($func->existeRegistro('cpf',$_POST['cpf'])):
+					printMSG(' Este CPF já está cadastrado, cadastre outro!', 'erro') ;
+					$duplicado = TRUE;
+				endif;
+				if($func->existeRegistro('num_carteira',$_POST['num_carteira'])):
+					printMSG(' Este número da carteira de trabalho já está cadastrado, cadastre outro!', 'erro') ;
+					$duplicado = TRUE;
+				endif;
+				if($func->existeRegistro('pis',$_POST['pis'])):
+					printMSG(' Este número de P.I.S. já está cadastrado, cadastre outro!', 'erro') ;
+					$duplicado = TRUE;
+				endif;
 				if($duplicado != TRUE):
-					$user->inserir($user);
-					if($user->linhasafetadas == 1):
-						printMSG('Dados inceridos com sucesso! <a href="'.ADMURL.'?m=funcionario&t=listar"> Exibir Cadastro </a>') ;
+					$func->inserir($func);
+					if($func->linhasafetadas == 1):
+						printMSG('Dados inceridos com sucesso! <a href="'.BASEURLFUNC.'?m=funcionario&t=listar"> Exibir Cadastro </a>') ;
 						unset($_POST);
 					endif;
 				endif;				
 			endif;
-			include ('cadastrar.php');
+			include ('../Funcionarios/cadastrar.php');
 		break;
 		case 'listar':
-			echo "<h2> Usuários Cadastrados </h2>";
+			echo "<h2> Funcionários Cadastrados </h2>";
 			loadCSS('data_tables', NULL, TRUE);
 			loadJS('jquery_data_tables');
-			include ('formularios/listar.php');
+			include ('../Funcionarios/listar.php');
 		break;
 		case 'editar':
-			echo '<h2> Edição de usuários </h2>';
+			echo '<h2> Edição de Funcionários </h2>';
 			$sessao = new sessao();
 			if(isAdmin() == TRUE || $sessao->getVar('iduser') == $_GET['id']):
 				if(isset($_GET['id'])):
@@ -38,86 +65,88 @@
 					$id = $_GET['id'];
 					if(isset($_POST['editar'])):
 						if(isAdmin() == TRUE):
-							$user = new usuario(array(
+							$func = new funcionario(array(
 								'nome'=>$_POST['nome'],
-								'email'=>$_POST['email'],
-								'ativo'=>($_POST['ativo']=='on') ? 's' : 'n',
-								'administrador'=>($_POST['adm']=='on') ? 's' : 'n',
+								'rg' => str_replace('.', '', str_replace('-', '', $_POST['rg'])),
+								'cpf' => str_replace('.', '', str_replace('-', '', $_POST['cpf'])),
+								'data_nasc' => date("Y-m-d",strtotime(str_replace('/','-',$_POST['data_nasc']))),
+								'pai' => $_POST['nome_pai'],
+								'mae' => $_POST['nome_mae'],
+								'dependentes' => $_POST['dependentes'],
+								'num_carteira' => $_POST['num_carteira'],
+								'pis' => $_POST['pis'],
+								'admissao' => date("Y-m-d",strtotime(str_replace('/','-',$_POST['admissao']))),
+								'demissao' => date("Y-m-d",strtotime(str_replace('/','-',$_POST['demissao']))),
+								'setor' => $_POST['setor'],
+								'salario' => $_POST['salario']
 							));
 						else:
-							$user = new usuario(array(
+							$func = new funcionario(array(
 								'nome'=>$_POST['nome'],
-								'email'=>$_POST['email'],
+								'rg' => str_replace('.', '', str_replace('-', '', $_POST['rg'])),
+								'cpf' => str_replace('.', '', str_replace('-', '', $_POST['cpf'])),
+								'data_nasc' => date("Y-m-d",strtotime(str_replace('/','-',$_POST['data_nasc']))),
+								'pai' => $_POST['nome_pai'],
+								'mae' => $_POST['nome_mae'],
+								'dependentes' => $_POST['dependentes'],
+								'num_carteira' => $_POST['num_carteira'],
+								'pis' => $_POST['pis'],
+								'admissao' => date("Y-m-d",strtotime(str_replace('/','-',$_POST['admissao']))),
+								'demissao' => date("Y-m-d",strtotime(str_replace('/','-',$_POST['demissao']))),
+								'setor' => $_POST['setor'],
+								'salario' => $_POST['salario']
 							));
 						endif;
-						$user->valorpk = $id;
-						$user->extras_select = "WHERE id=$id";
-						$user->selecionaTudo($user);
-						$res = $user->retornaDados();
-						if($res->email != $_POST['email']):
-							if($user->existeRegistro('email',$_POST['email'])):
-								printMSG(' Este email já está cadastrado, escolha outro endereço!', 'erro') ;
+						$func->valorpk = $id;
+						$func->extras_select = "WHERE id=$id";
+						$func->selecionaTudo($func);
+						$res = $func->retornaDados();
+						if($res->rg != $_POST['rg']):
+							if($func->existeRegistro('rg',$_POST['rg'])):
+								printMSG(' Este RG já está cadastrado, cadastre outro!', 'erro') ;
+								$duplicado = TRUE;
+							endif;
+						endif;
+						if($res->cpf != $_POST['cpf']):
+							if($func->existeRegistro('cpf',$_POST['cpf'])):
+								printMSG(' Este CPF já está cadastrado, cadastre outro!', 'erro') ;
+								$duplicado = TRUE;
+							endif;
+						endif;
+						if($res->num_carteira != $_POST['num_carteira']):
+							if($func->existeRegistro('num_carteira',$_POST['num_carteira'])):
+								printMSG(' Este número da carteira de trabalho já está cadastrado, cadastre outro!', 'erro') ;
+								$duplicado = TRUE;
+							endif;
+						endif;
+						if($res->pis != $_POST['pis']):
+							if($func->existeRegistro('pis',$_POST['pis'])):
+								printMSG(' Este número de P.I.S. já está cadastrado, cadastre outro!', 'erro') ;
 								$duplicado = TRUE;
 							endif;
 						endif;
 						if($duplicado != TRUE):
-							$user->atualizar($user);
-							if($user->linhasafetadas == 1):
-								printMSG('Dados alterados com sucesso! <a href="'.ADMURL.'?m=funcionario&t=listar"> Ver alteração </a>') ;
+							$func->atualizar($func);
+							if($func->linhasafetadas == 1):
+								printMSG('Dados alterados com sucesso! <a href="'.BASEURLFUNC.'?m=funcionario&t=listar"> Ver alteração </a>') ;
 								unset($_POST);
 							else:
-								printMSG(' Nenhum dado foi alterado! <a href="'.ADMURL.'?m=funcionario&t=listar"> Ver usuários </a>', 'alerta') ;
+								printMSG(' Nenhum dado foi alterado! <a href="'.BASEURLFUNC.'?m=funcionario&t=listar"> Ver usuários </a>', 'alerta') ;
 							endif;
 						endif;				
 					endif;									
-					$userbd = new usuario();
-					$userbd->extras_select = "WHERE id=$id";
-					$userbd->selecionaTudo($userbd);
-					$resbd = $userbd->retornaDados();
+					$funcbd = new funcionario();
+					$funcbd->extras_select = "WHERE id=$id";
+					$funcbd->selecionaTudo($funcbd);
+					$resbd = $funcbd->retornaDados();
 				else:
 					//avisa para seleciona user
-					printMSG('Usuário não definido, <a href="?m=funcionario&t=listar"> Escolha um usuário para alterar!</a>','alerta');
+					printMSG('Funcionário não definido, <a href="?m=funcionario&t=listar"> Escolha um funcionário para alterar!</a>','alerta');
 				endif;
-				include ('formularios/editar.php');
+				include ('../Funcionarios/editar.php');
 			else:
-				printMSG('Você não tem permissão para acessar esta página! <a href="'.ADMURL.'?m=funcionario&t=listar"> Voltar </a>','erro');
+				printMSG('Você não tem permissão para acessar esta página! <a href="'.BASEURLFUNC.'?m=funcionario&t=listar"> Voltar </a>','erro');
 			endif;
-		break;
-		case 'senha':
-			echo '<h2> Alteração de senha </h2>';
-			$sessao = new sessao();
-			if(isAdmin() == TRUE || $sessao->getVar('iduser') == $_GET['id']):
-				if(isset($_GET['id'])):
-					//faz a edição do usuário
-					$id = $_GET['id'];
-					if(isset($_POST['mudasenha'])):
-						$user = new usuario(array(
-							'senha'=>codificaSenha($_POST['senha']),
-						));
-						$user->valorpk = $id;
-						$user->atualizar($user);
-						if($user->linhasafetadas == 1):
-							printMSG('Senha alterada com sucesso! <a href="'.ADMURL.'?m=funcionario&t=listar"> Ver alteração </a>') ;
-							unset($_POST);
-						else:
-							printMSG(' Nenhum dado foi alterado! <a href="'.ADMURL.'?m=funcionario&t=listar"> Ver usuários </a>', 'alerta') ;
-						endif;									
-					endif;									
-					$userbd = new usuario();
-					$userbd->extras_select = "WHERE id=$id";
-					$userbd->selecionaTudo($userbd);
-					$resbd = $userbd->retornaDados();
-				else:
-					//avisa para seleciona user
-					printMSG('Usuário não definido, <a href="?m=funcionario&t=listar"> Escolha um usuário para alterar!</a>','alerta');
-				endif;
-				include ('formularios/mudarsenha.php');
-			else:
-				//Sem permissão para alterar
-				printMSG('Você não tem permissão para acessar esta página! <a href="'.ADMURL.'?m=funcionario&t=listar"> Voltar </a>','erro');
-			endif;
-		break;
-		case '':
 		break;
 		case 'excluir':
 			echo '<h2> Eclusão de usuários </h2>';
@@ -127,30 +156,30 @@
 					//faz a edição do usuário
 					$id = $_GET['id'];
 					if(isset($_POST['excluir'])):
-						$user = new usuario();
-						$user->valorpk = $id;
-						$user->extras_select = "WHERE id=$id";						
-						$user->deletar($user);
-						if($user->linhasafetadas == 1):
-							printMSG('Dados excluídos com sucesso! <a href="'.ADMURL.'?m=funcionario&t=listar"> Ver alteração </a>') ;
+						$func = new funcionario();
+						$func->valorpk = $id;
+						$func->extras_select = "WHERE id=$id";						
+						$func->deletar($func);
+						if($func->linhasafetadas == 1):
+							printMSG('Dados excluídos com sucesso! <a href="'.BASEURLFUNC.'?m=funcionario&t=listar"> Ver alteração </a>') ;
 							unset($_POST);
 						else:
-							printMSG(' Nenhum registro foi excluído! <a href="'.ADMURL.'?m=funcionario&t=listar"> Ver usuários </a>', 'alerta') ;
+							printMSG(' Nenhum registro foi excluído! <a href="'.BASEURLFUNC.'?m=funcionario&t=listar"> Ver usuários </a>', 'alerta') ;
 						endif;
 								
 					endif;				
 					
-					$userbd = new usuario();
-					$userbd->extras_select = "WHERE id=$id";
-					$userbd->selecionaTudo($userbd);
-					$resbd = $userbd->retornaDados();
+					$funcbd = new funcionario();
+					$funcbd->extras_select = "WHERE id=$id";
+					$funcbd->selecionaTudo($funcbd);
+					$resbd = $funcbd->retornaDados();
 				else:
 					//avisa para seleciona user
-					printMSG('Usuário não definido, <a href="?m=funcionario&t=listar"> Escolha um usuário para excluir!</a>','alerta');
+					printMSG('Funcionário não definido, <a href="?m=funcionario&t=listar"> Escolha um usuário para excluir!</a>','alerta');
 				endif;
-				include ('formularios/excluir.php');
+				include ('../Funcionarios/excluir.php');
 			else:
-				printMSG('Você não tem permissão para acessar esta página! <a href="'.ADMURL.'?m=funcionario&t=listar"> Voltar </a>','erro');
+				printMSG('Você não tem permissão para acessar esta página! <a href="'.BASEURLFUNC.'?m=funcionario&t=listar"> Voltar </a>','erro');
 			endif;
 		break;
 		default:

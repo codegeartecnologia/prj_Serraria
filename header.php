@@ -12,51 +12,12 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		
-		<?php loadCSS('reset'); loadCSS('style'); loadCSS('bootstrap'); loadJS('jquery'); loadJS('geral'); ?>
+		<?php loadCSS('reset'); loadCSS('style'); loadCSS('bootstrap'); loadJS('jquery'); loadJS('geral'); loadJS('bootstrap'); loadJS('jquery_mask'); ?>
 
 		<title> Painel Administrativo </title>
 		
-		<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
-    
-	    <script type="text/javascript">
-	    	google.load('visualization', '1', {packages: ['corechart']});
-		    google.setOnLoadCallback(drawChart);
-		
-		    function drawChart() {
-		
-		      var data = google.visualization.arrayToDataTable([
-		        ['Madeiras', 'Estoque', { role: 'style' }],
-		        ['Aparelhada', 200, '#663300'],
-		        ['Bruta', 300, '#663300'],
-		        ['Seca', 400, '#663300'],
-		        ['Seca Aparelhada', 500, '#663300'],
-		        ['Tratada Aparelhada', 600, '#663300'],
-		        ['Tratada Bruta', 700, '#663300'],
-		        ['Verde Aparelhada', 800, '#663300']
-		      ]);
-		
-		      var options = {
-		        title: 'Madeiras em Estoque',
-		        width: 900,
-		        height: 500,
-		        label: 'color: #663300',
-		        hAxis: {
-		          title: 'Quantidade em M³',
-		          minValue: 0
-		        },
-		        vAxis: {
-		          title: 'Madeiras'
-		        },
-		        isStacked: true
-		      };
-		
-		      var chart = new google.visualization.BarChart(
-		        document.getElementById('ex0'));
-		
-		      chart.draw(data, options);
-		    }
-	    </script>
-
+		<!--<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script> -->
 	</head>
 
 	<body class="painel">
@@ -70,8 +31,8 @@
 	                <!-- /.panel-heading -->
 	                <div class="panel-body">
 	                    <!-- Nav tabs -->
-	                    <ul class="nav nav-tabs">
-	                        <li class="active">	<a href="#info" data-toggle="tab">                        	
+	                    <ul class="nav-tabs">
+	                        <li>	<a href="#info" data-toggle="tab">                        	
 	                        	<button class="botao" onclick="location.href='<?php echo BASEURLINFO ?>'">
 				                    <div class="info">
 				                        <img class="img" src="../images/icones/infor.ico" alt="Informações" />

@@ -128,7 +128,7 @@
 		
 		public function executaSQL($sql=NULL){
 			if($sql != NULL):
-				$query = mysqli_query($this->conexao, $sql) or $this->trataerro(__FILE__, __FUNCTION__); 
+				$query = mysqli_query($this->conexao, $sql) or $this->trataerro(__FILE__, __FUNCTION__, NULL, 'Teste', FALSE); 
 				$this->linhasafetadas = mysqli_affected_rows($this->conexao);
 				if(substr(trim(strtolower($sql)), 0,6)=="select"):
 					$this->dataset = $query;
